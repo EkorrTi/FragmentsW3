@@ -42,6 +42,7 @@
         android:inputType="none"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_surname"
         tools:text="89993335115" />
 
@@ -59,6 +60,7 @@
         android:id="@+id/save_contact_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
         android:text="@string/save"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

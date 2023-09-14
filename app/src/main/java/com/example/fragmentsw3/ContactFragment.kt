@@ -12,7 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 
 class ContactFragment : Fragment() {
-    private lateinit var contact: Contact
+    private lateinit var name: EditText
+    private lateinit var surname: EditText
+    private lateinit var phone: EditText
+    private lateinit var editButton: Button
+    private lateinit var saveButton: Button
+    var contact: Contact? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,41 +34,64 @@ class ContactFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val name: EditText = view.findViewById(R.id.contact_name)
-        val surname: EditText = view.findViewById(R.id.contact_surname)
-        val phone: EditText = view.findViewById(R.id.contact_phone)
-        val editButton: Button = view.findViewById(R.id.edit_contact_button)
-        val saveButton: Button = view.findViewById(R.id.save_contact_button)
 
-        name.setText(contact.name)
-        surname.setText(contact.surname)
-        phone.setText(contact.phone)
-        editButton.setOnClickListener {
-            makeEditable(name, surname, phone)
-            saveButton.isVisible = true
-            editButton.isVisible = false
-        }
-        saveButton.setOnClickListener {
-            saveChanges(name.text.toString(), surname.text.toString(), phone.text.toString())
-        }
+        name = view.findViewById(R.id.contact_name)
+        surname = view.findViewById(R.id.contact_surname)
+        phone = view.findViewById(R.id.contact_phone)
+        editButton = view.findViewById(R.id.edit_contact_button)
+        saveButton = view.findViewById(R.id.save_contact_button)
+
+        if (contact != null) displayInfo()
+        else view.isVisible = false
+
+        editButton.setOnClickListener { makeEditable() }
+        saveButton.setOnClickListener { saveChanges() }
     }
 
-    private fun makeEditable(nameET: EditText, surnameET: EditText, phoneET: EditText) {
-        nameET.isFocusable = true
-        nameET.isFocusableInTouchMode = true
-        nameET.inputType = InputType.TYPE_CLASS_TEXT
-        surnameET.isFocusable = true
-        surnameET.isFocusableInTouchMode = true
-        surnameET.inputType = InputType.TYPE_CLASS_TEXT
-        phoneET.isFocusable = true
-        phoneET.isFocusableInTouchMode = true
-        phoneET.inputType = InputType.TYPE_CLASS_PHONE
+    fun displayInfo() {
+        name.setText(contact?.name)
+        surname.setText(contact?.surname)
+        phone.setText(contact?.phone)
+        view?.isVisible = true
     }
 
-    private fun saveChanges(name: String, surname: String, phone: String) {
-        contact.name = name
-        contact.surname = surname
-        contact.phone = phone
-        findNavController().navigateUp()
+    private fun makeEditable() {
+        name.isFocusable = true
+        name.isFocusableInTouchMode = true
+        name.inputType = InputType.TYPE_CLASS_TEXT
+        surname.isFocusable = true
+        surname.isFocusableInTouchMode = true
+        surname.inputType = InputType.TYPE_CLASS_TEXT
+        phone.isFocusable = true
+        phone.isFocusableInTouchMode = true
+        phone.inputType = InputType.TYPE_CLASS_PHONE
+        saveButton.isVisible = true
+        editButton.isVisible = false
+    }
+
+    private fun makeUneditable() {
+        name.isFocusable = false
+        name.isFocusableInTouchMode = false
+        name.inputType = InputType.TYPE_NULL
+        surname.isFocusable = false
+        surname.isFocusableInTouchMode = false
+        surname.inputType = InputType.TYPE_NULL
+        phone.isFocusable = false
+        phone.isFocusableInTouchMode = false
+        phone.inputType = InputType.TYPE_NULL
+        editButton.isVisible = true
+        saveButton.isVisible = false
+    }
+
+    private fun saveChanges() {
+        contact?.name = name.text.toString()
+        contact?.surname = surname.text.toString()
+        contact?.phone = phone.text.toString()
+        if (resources.getBoolean(R.bool.isTablet)) {
+            (parentFragmentManager.findFragmentById(R.id.fragment_container_1) as ListContactsFragment)
+                .notifyAdapter()
+            makeUneditable()
+        }
+        else findNavController().navigateUp()
     }
 }

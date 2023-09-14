@@ -6,26 +6,30 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
+    private var navController: NavController? = null
+    private var isTablet = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = (supportFragmentManager
-            .findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment)
-            .navController
+        val fragmentManager = supportFragmentManager
+        isTablet = resources.getBoolean(R.bool.isTablet)
+
+        if (isTablet) {
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_1, ListContactsFragment())
+                .replace(R.id.fragment_container_2, ContactFragment())
+                .commit()
+        } else {
+            navController = (fragmentManager
+                .findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment)
+                .navController
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    override fun onBackPressed() {
-        when (navController.currentDestination?.id) {
-            R.id.navigation_contact_list -> finish()
-
-            else -> navController.popBackStack(R.id.navigation_contact_list, false)
-        }
+        return if (isTablet) navController!!.navigateUp() || super.onSupportNavigateUp()
+        else super.onSupportNavigateUp()
     }
 }

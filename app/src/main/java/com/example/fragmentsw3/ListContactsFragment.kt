@@ -33,11 +33,22 @@ class ListContactsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val isTablet = resources.getBoolean(R.bool.isTablet)
         adapter = ContactsRecyclerViewAdapter(contacts)
-        adapter.onClick = {
-            findNavController().navigate(
-                R.id.action_listContactsFragment_to_contactFragment, bundleOf(Pair("contact", it))
-            )
+        if (isTablet) {
+            adapter.onClick = {
+                with (parentFragmentManager.findFragmentById(R.id.fragment_container_2) as ContactFragment){
+                    contact = it
+                    displayInfo()
+                }
+            }
+        } else {
+            adapter.onClick = {
+                findNavController().navigate(
+                    R.id.action_listContactsFragment_to_contactFragment,
+                    bundleOf(Pair("contact", it))
+                )
+            }
         }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.contacts_recycler_view)
@@ -49,8 +60,5 @@ class ListContactsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-        adapter.notifyDataSetChanged()
-    }
+    fun notifyAdapter() = adapter.notifyDataSetChanged()
 }
