@@ -21,11 +21,11 @@ class ListContactsFragment : Fragment() {
         for (i in 1..20) {
             contacts.addAll(
                 listOf(
-                    Contact("Johnny", "Cage", "89993335115"),
-                    Contact("Meg", "Thomas", "89993335555"),
-                    Contact("Dwight", "Fairfield", "89993335556"),
-                    Contact("William", "Overbeck", "899933355557"),
-                    Contact("Bill", "Murray", "89993335558"),
+                    Contact("Johnny", "Cage", "89993335115", "https://picsum.photos/128"),
+                    Contact("Meg", "Thomas", "89993335555", "https://picsum.photos/64"),
+                    Contact("Dwight", "Fairfield", "89993335556", "https://picsum.photos/32"),
+                    Contact("William", "Overbeck", "899933355557", "https://picsum.photos/16"),
+                    Contact("Bill", "Murray", "89993335558", "https://picsum.photos/8"),
                 )
             )
         }
@@ -42,7 +42,8 @@ class ListContactsFragment : Fragment() {
                     displayInfo()
                 }
             }
-        } else {
+        }
+        else {
             adapter.onClick = {
                 findNavController().navigate(
                     R.id.action_listContactsFragment_to_contactFragment,

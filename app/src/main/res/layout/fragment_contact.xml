@@ -15,9 +15,9 @@
         android:hint="@string/name"
         android:inputType="none"
         android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_avatar"
+        app:layout_constraintEnd_toStartOf="@+id/contact_avatar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Johnny" />
 
     <EditText
@@ -30,7 +30,7 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_name"
+        app:layout_constraintTop_toBottomOf="@+id/contact_avatar"
         tools:text="Cage" />
 
     <EditText
@@ -45,6 +45,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_surname"
         tools:text="89993335115" />
+
+    <ImageView
+        android:id="@+id/contact_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/black"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_contact_button"

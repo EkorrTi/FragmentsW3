@@ -29,5 +29,14 @@
             app:layout_constraintTop_toBottomOf="@id/contact_item_name"
             tools:text="89993335115" />
 
+        <ImageView
+            android:id="@+id/contact_item_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

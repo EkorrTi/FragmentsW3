@@ -4,8 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 class ContactsRecyclerViewAdapter(private val data: MutableList<Contact>) :
     RecyclerView.Adapter<ContactsRecyclerViewAdapter.ContactsRecyclerViewHolder>() {
@@ -23,6 +25,7 @@ class ContactsRecyclerViewAdapter(private val data: MutableList<Contact>) :
 
         holder.name.text = "${contact.name} ${contact.surname}"
         holder.phone.text = contact.phone
+        Picasso.get().load(contact.avatarURL).into(holder.avatar)
         holder.itemView.setOnClickListener { onClick?.invoke(contact) }
         holder.itemView.setOnLongClickListener {
             data.removeAt(position)
@@ -37,5 +40,6 @@ class ContactsRecyclerViewAdapter(private val data: MutableList<Contact>) :
     class ContactsRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.contact_item_name)
         val phone: TextView = view.findViewById(R.id.contact_item_phone)
+        val avatar: ImageView = view.findViewById(R.id.contact_item_avatar)
     }
 }

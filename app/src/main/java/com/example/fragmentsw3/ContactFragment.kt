@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.squareup.picasso.Picasso
 
 class ContactFragment : Fragment() {
     private lateinit var name: EditText
     private lateinit var surname: EditText
     private lateinit var phone: EditText
+    private lateinit var avatar: ImageView
     private lateinit var editButton: Button
     private lateinit var saveButton: Button
     var contact: Contact? = null
@@ -38,6 +41,7 @@ class ContactFragment : Fragment() {
         name = view.findViewById(R.id.contact_name)
         surname = view.findViewById(R.id.contact_surname)
         phone = view.findViewById(R.id.contact_phone)
+        avatar = view.findViewById(R.id.contact_avatar)
         editButton = view.findViewById(R.id.edit_contact_button)
         saveButton = view.findViewById(R.id.save_contact_button)
 
@@ -52,6 +56,7 @@ class ContactFragment : Fragment() {
         name.setText(contact?.name)
         surname.setText(contact?.surname)
         phone.setText(contact?.phone)
+        Picasso.get().load(contact?.avatarURL).into(avatar)
         view?.isVisible = true
     }
 
