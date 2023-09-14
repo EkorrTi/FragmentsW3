@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        when (navController.currentDestination?.id){
+        when (navController.currentDestination?.id) {
             R.id.navigation_contact_list -> finish()
 
             else -> navController.popBackStack(R.id.navigation_contact_list, false)
