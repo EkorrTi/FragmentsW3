@@ -7,4 +7,6 @@ data class Contact(
     var surname: String,
     var phone: String,
     val avatarURL: String,
-): Serializable
+) : Serializable {
+    val fullName = "$name $surname"
+}
