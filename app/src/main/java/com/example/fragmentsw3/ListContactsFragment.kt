@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -62,10 +64,15 @@ class ListContactsFragment : Fragment() {
             }
         })
 
+        val decorator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider, null)
+            ?.let { decorator.setDrawable(it) }
+
         val recyclerView: RecyclerView = view.findViewById(R.id.contacts_recycler_view)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = this@ListContactsFragment.adapter
+            addItemDecoration(decorator)
         }
 
         super.onViewCreated(view, savedInstanceState)
